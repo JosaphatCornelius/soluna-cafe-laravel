@@ -1,11 +1,60 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+:root {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+@layer components {
+    .glass-navbar-shell {
+        @apply mx-auto w-full max-w-[826px] px-4;
+    }
+
+    .glass-navbar {
+        @apply relative flex h-[51px] items-center justify-center overflow-hidden rounded-[296px] p-[4px];
+        box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .glass-navbar-surface {
+        @apply absolute inset-0 rounded-[296px];
+        background: rgba(255, 255, 255, 0.65);
+        backdrop-filter: blur(18px) saturate(160%);
+        -webkit-backdrop-filter: blur(18px) saturate(160%);
+    }
+
+    .glass-navbar-surface::before {
+        content: '';
+        @apply absolute inset-0 rounded-[296px];
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0.18));
+        pointer-events: none;
+    }
+
+    .glass-navbar-track {
+        @apply relative z-10 flex h-[36px] w-full items-center justify-center;
+    }
+
+    .glass-navbar-item {
+        @apply relative flex h-full flex-1 items-center justify-center px-[18px] py-[8px] text-center text-[15px] text-[#1a1a1a] transition-colors duration-200;
+        letter-spacing: -0.23px;
+    }
+
+    .glass-navbar-item:hover {
+        @apply text-black;
+    }
+
+    .glass-navbar-item span {
+        @apply relative z-10;
+    }
+
+    .glass-navbar-item--active {
+        @apply rounded-[100px] font-bold text-black;
+    }
+
+    .glass-navbar-item--active::before {
+        content: '';
+        @apply absolute inset-0 rounded-[100px];
+        background: #ededed;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+    }
 }
