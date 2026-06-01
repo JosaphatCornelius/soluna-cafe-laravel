@@ -1,0 +1,43 @@
+@php
+    $items = [
+        ['label' => 'Overview', 'href' => '#overview', 'active' => true],
+        ['label' => 'Homepage', 'href' => '#homepage', 'active' => false],
+        ['label' => 'Products', 'href' => '#products', 'active' => false],
+        ['label' => 'Promotions', 'href' => '#promotions', 'active' => false],
+        ['label' => 'Contact', 'href' => '#contact', 'active' => false],
+        ['label' => 'Media', 'href' => '#media', 'active' => false],
+        ['label' => 'Messages', 'href' => '#messages', 'active' => false],
+    ];
+@endphp
+
+<aside class="border-b border-[#d8c9b7] bg-[#3f2719] px-6 py-6 text-white lg:fixed lg:inset-y-0 lg:left-0 lg:w-[290px] lg:border-b-0 lg:border-r">
+    <div class="flex items-center justify-between gap-4 lg:block">
+        <div>
+            <p class="font-['MedievalSharp'] text-[28px] leading-none text-white">Soluna Cafe</p>
+            <p class="mt-2 font-['Host_Grotesk'] text-[13px] uppercase tracking-[0.3em] text-white/55">Content dashboard</p>
+        </div>
+
+        <div class="rounded-full bg-white/10 px-3 py-1 font-['Host_Grotesk'] text-[12px] uppercase tracking-[0.28em] text-white/70 lg:mt-6 lg:inline-flex">
+            Simple CMS
+        </div>
+    </div>
+
+    <nav class="mt-8">
+        <p class="font-['Host_Grotesk'] text-[12px] font-bold uppercase tracking-[0.3em] text-white/45">Navigation</p>
+        <ul class="mt-4 space-y-2">
+            @foreach ($items as $item)
+                <li>
+                    <a href="{{ $item['href'] }}" class="flex items-center justify-between rounded-[16px] px-4 py-3 font-['Host_Grotesk'] text-[15px] transition-colors duration-200 {{ $item['active'] ? 'bg-white text-[#3f2719] font-bold' : 'text-white/75 hover:bg-white/10 hover:text-white' }}">
+                        <span>{{ $item['label'] }}</span>
+                        <span class="text-[12px] {{ $item['active'] ? 'text-[#3f2719]/70' : 'text-white/35' }}">0{{ $loop->iteration }}</span>
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+    </nav>
+
+    <div class="mt-8 rounded-[22px] bg-white/10 p-4 backdrop-blur-sm">
+        <p class="font-['Host_Grotesk'] text-[13px] font-bold uppercase tracking-[0.28em] text-white/55">Status</p>
+        <p class="mt-2 font-['Host_Grotesk'] text-[15px] leading-relaxed text-white/80">This dashboard is a front-end placeholder. Connect your CMS actions later.</p>
+    </div>
+</aside>

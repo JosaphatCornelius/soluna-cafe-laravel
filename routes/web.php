@@ -11,5 +11,9 @@ Route::get('/product', function () {
     return view('product');
 });
 
+Route::get('/cms', function () {
+    return view('cms.dashboard');
+})->name('cms.dashboard');
+
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
