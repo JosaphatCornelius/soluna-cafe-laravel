@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coffee Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         *{
             margin:0;
@@ -33,44 +34,6 @@
             position:relative;
         }
 
-        /* Navbar */
-        .navbar{
-            position:absolute;
-            top:40px;
-            left:50%;
-            transform:translateX(-50%);
-            width:75%;
-            background:rgba(255,255,255,0.25);
-            backdrop-filter:blur(10px);
-            border-radius:50px;
-            padding:15px 20px;
-        }
-
-        .navbar ul{
-            display:flex;
-            justify-content:space-around;
-            align-items:center;
-            list-style:none;
-        }
-
-        .navbar ul li a{
-            text-decoration:none;
-            color:#000;
-            font-weight:500;
-            padding:10px 20px;
-            transition:0.3s;
-        }
-
-        .navbar ul li a:hover{
-            background:rgba(255,255,255,0.5);
-            border-radius:25px;
-        }
-
-        .active{
-            background:rgba(255,255,255,0.6);
-            border-radius:25px;
-        }
-
         /* Hero Content */
         .hero-content{
             position:absolute;
@@ -96,13 +59,18 @@
 
         /* our story */
         .our-story h1{
+            font-weight: 600;
             text-align:center;
             margin-bottom:40px;
-            margin-top:40px;
+            padding-top:40px;
+            font-size:38px;
+            line-height:1.1;
+            letter-spacing:1px;
+            color:#2f1e10;
         }
         .card-story{
             width: 50%;
-            margin-left: 25%;
+            margin: auto;
             border-radius: 10px;
             box-shadow: 2px 5px 20px rgba(0, 0, 0, 0.3);
         }
@@ -114,7 +82,7 @@
             border-radius: 10px;
         }
         .card-story p{
-            padding-bottom: 40px;
+            padding: 0 40px 40px 40px;
             text-align: justify;
         }
 
@@ -127,6 +95,10 @@
             margin-bottom:40px;
         }
         .recommendation .title h1{
+            font-weight: 600;
+            text-align:center;
+            margin-bottom:40px;
+            padding-top:40px;
             font-size:38px;
             line-height:1.1;
             letter-spacing:1px;
@@ -207,14 +179,15 @@
         }
 
         /* location */
-        .location{
-            background-color: #3F2719;
-        }
         .location h1{
-            color: white;
+            font-weight: 600;
             text-align:center;
             margin-bottom:40px;
             padding-top:40px;
+            font-size:38px;
+            line-height:1.1;
+            letter-spacing:1px;
+            color:#2f1e10;
         }
         iframe{
             width: 70%;
@@ -222,100 +195,12 @@
             padding-bottom: 50px;
         }
 
-        /* Footer */
-        footer{
-            background:#e8dcc8;
-            padding:50px 40px;
-            font-family:Arial, sans-serif;
-        }
-        .footer-content{
-            max-width:1200px;
-            margin:0 auto;
-            display:grid;
-            grid-template-columns:1fr 1fr 1fr 1fr;
-            gap:50px;
-        }
-        .footer-brand{
-            display:flex;
-            flex-direction:column;
-            align-items:flex-start;
-        }
-        .footer-brand img{
-            width:120px;
-            margin-bottom:20px;
-        }
-        .footer-logo{
-            width:40px;
-            height:40px;
-            margin-bottom:20px;
-            background:#2f1e10;
-            border-radius:8px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            color:#f4e9dc;
-            font-weight:bold;
-            font-size:20px;
-        }
-        .footer-socials{
-            display:flex;
-            gap:12px;
-            margin-top:15px;
-        }
-        .footer-socials a{
-            width:28px;
-            height:28px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            border-radius:4px;
-            background:transparent;
-            color:#2f1e10;
-            text-decoration:none;
-            font-weight:bold;
-            font-size:14px;
-            transition:all 0.3s;
-        }
-        .footer-socials a:hover{
-            background:#2f1e10;
-            color:#f4e9dc;
-        }
-        .footer-column h3{
-            font-size:14px;
-            font-weight:600;
-            color:#2f1e10;
-            margin-bottom:18px;
-        }
-        .footer-column ul{
-            list-style:none;
-            padding:0;
-        }
-        .footer-column li{
-            margin-bottom:12px;
-        }
-        .footer-column a{
-            color:#2f1e10;
-            text-decoration:none;
-            font-size:13px;
-            transition:color 0.3s;
-        }
-        .footer-column a:hover{
-            color:#5d3d2c;
-        }
     </style>
 </head>
 <body>
 
     <section class="hero">
-        <nav class="navbar">
-            <ul>
-                <li><a href="#" class="active">Home</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Products</a></li>
-                <li><a href="#">Promotions</a></li>
-                <li><a href="#">Contact Us</a></li>
-            </ul>
-        </nav>
+        @include('components.navbar')
 
         <div class="hero-content">
             <h1>Inhale the coffee,</h1>
@@ -377,52 +262,7 @@
         </div>
     </section>
 
-    <footer>
-    <div class="footer-content">
-        <div class="footer-brand">
-            <img src="{{ asset('images/logo.png') }}" alt="Logo">
-            <div class="footer-socials">
-                <a href="#" title="Twitter">𝕏</a>
-                <a href="#" title="Instagram">📷</a>
-                <a href="#" title="YouTube">▶</a>
-                <a href="#" title="LinkedIn">in</a>
-            </div>
-        </div>
-
-        <div class="footer-column">
-            <h3>MENU</h3>
-            <ul>
-                <li><a href="#">Coffee</a></li>
-                <li><a href="#">Tea</a></li>
-                <li><a href="#">Pastries</a></li>
-                <li><a href="#">Desserts</a></li>
-                <li><a href="#">Beverages</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-column">
-            <h3>ABOUT</h3>
-            <ul>
-                <li><a href="#">Our Story</a></li>
-                <li><a href="#">Team</a></li>
-                <li><a href="#">Locations</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-column">
-            <h3>SUPPORT</h3>
-            <ul>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms</a></li>
-                <li><a href="#">Contact Us</a></li>
-                <li><a href="#">Blog</a></li>
-            </ul>
-        </div>
-    </div>
-    </footer>
+    @include('components.footer')
 
 <script>
     const slides = [
