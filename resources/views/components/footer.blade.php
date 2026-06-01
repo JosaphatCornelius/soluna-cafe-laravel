@@ -1,5 +1,5 @@
 <footer class="bg-[#3f2719] py-16 text-[#f0f0e6]">
-    <div class="contact-shell mx-auto px-6 md:px-[60px]">
+    <div class="contact-shell mx-auto px-6 md:px-15">
         <div class="grid grid-cols-1 gap-12 border-b border-[#f0f0e6]/20 pb-12 md:grid-cols-3">
             <!-- Brand -->
             <div class="space-y-4">
@@ -16,7 +16,8 @@
                     <li><a href="{{ url('/') }}" class="hover:text-white transition-colors duration-200">Home</a></li>
                     <li><a href="{{ url('/#about') }}" class="hover:text-white transition-colors duration-200">About Us</a></li>
                     <li><a href="{{ url('/#products') }}" class="hover:text-white transition-colors duration-200">Products</a></li>
-                    <li><a href="{{ url('/contact') }}" class="hover:text-white transition-colors duration-200">Contact</a></li>
+                    <li><a href="{{ url('/#promotions') }}" class="hover:text-white transition-colors duration-200">Promotions</a></li>
+                    <li><a href="{{ url('/contact') }}" class="hover:text-white transition-colors duration-200">Contact Us</a></li>
                 </ul>
             </div>
 
