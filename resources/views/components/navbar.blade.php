@@ -1,124 +1,93 @@
 @php
     $items = [
-        ['label' => 'Home', 'url' => url('/'), 'active' => false],
+        ['label' => 'Home', 'url' => url('/'), 'active' => request()->is('/')],
         ['label' => 'About Us', 'url' => url('/#about'), 'active' => false],
-        ['label' => 'Products', 'url' => url('/#products'), 'active' => false],
+        ['label' => 'Product', 'url' => url('/product'), 'active' => request()->is('product')],
         ['label' => 'Promotions', 'url' => url('/#promotions'), 'active' => false],
-        ['label' => 'Label', 'url' => url('/contact'), 'active' => true],
+        ['label' => 'Contact Us', 'url' => url('/contact'), 'active' => request()->is('contact')],
     ];
 @endphp
 
 <style>
-    .navbar-glass-wrap {
+    .floating-nav {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 50;
-        display: flex;
-        justify-content: center;
-        padding: 24px 16px 0;
-        background: transparent;
-        pointer-events: none;
+        top: 25px;
+        left: 50%;
+        transform: translateX(-50%);
+
+        width: 90%;
+        max-width: 850px;
+
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+
+        padding: 10px 20px;
+        border-radius: 50px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        z-index: 1000;
+        transition: all 0.3s ease;
     }
 
-    .navbar-glass {
-        position: relative;
+    .floating-nav ul {
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        width: min(826px, 100%);
-        height: 51px;
-        padding: 4px;
-        overflow: hidden;
-        border-radius: 296px;
-        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
-        pointer-events: auto;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        gap: 5px;
     }
 
-    .navbar-glass__surface {
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        background: rgba(255, 255, 255, 0.65);
-        backdrop-filter: blur(18px) saturate(160%);
-        -webkit-backdrop-filter: blur(18px) saturate(160%);
-    }
-
-    .navbar-glass__surface::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0.18));
-        pointer-events: none;
-    }
-
-    .navbar-glass__track {
-        position: relative;
-        z-index: 1;
-        display: flex;
-        width: 100%;
-        height: 36px;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .navbar-glass__item {
-        position: relative;
-        display: flex;
-        flex: 1 0 0;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        padding: 0 18px;
-        border-radius: 100px;
-        color: #1a1a1a;
+    .floating-nav a {
         text-decoration: none;
-        font-family: 'SF Pro Display', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        font-size: 15px;
-        line-height: normal;
-        letter-spacing: -0.23px;
-        transition: color 160ms ease;
-    }
-
-    .navbar-glass__item:hover {
-        color: #000;
-    }
-
-    .navbar-glass__item span {
-        position: relative;
-        z-index: 1;
+        color: #333;
+        font-family: 'Host Grotesk', sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 10px 18px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
         white-space: nowrap;
     }
 
-    .navbar-glass__item--active {
-        font-weight: 700;
+    .floating-nav a:hover {
+        background: rgba(0, 0, 0, 0.08);
         color: #000;
     }
 
-    .navbar-glass__item--active::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: 100px;
-        background: #ededed;
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+    .floating-nav .active a {
+        font-weight: 700;
+        background: #dcdcdc;
+        color: #000;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    @media (max-width: 768px) {
+        .floating-nav {
+            top: 15px;
+            width: 95%;
+            padding: 8px;
+        }
+
+        .floating-nav ul {
+            gap: 0;
+        }
+
+        .floating-nav a {
+            padding: 8px 10px;
+            font-size: 13px;
+        }
     }
 </style>
 
-<div class="navbar-glass-wrap">
-    <nav class="navbar-glass" aria-label="Primary">
-        <div class="navbar-glass__surface" aria-hidden="true"></div>
-        <div class="navbar-glass__track">
-            @foreach ($items as $item)
-                <a
-                    href="{{ $item['url'] }}"
-                    class="navbar-glass__item {{ $item['active'] ? 'navbar-glass__item--active' : '' }}"
-                    @if ($item['active']) aria-current="page" @endif
-                >
-                    <span>{{ $item['label'] }}</span>
-                </a>
-            @endforeach
-        </div>
-    </nav>
-</div>
+<nav class="floating-nav">
+    <ul>
+        @foreach ($items as $item)
+            <li class="{{ $item['active'] ? 'active' : '' }}">
+                <a href="{{ $item['url'] }}" @if ($item['active']) aria-current="page" @endif>{{ $item['label'] }}</a>
+            </li>
+        @endforeach
+    </ul>
+</nav>
