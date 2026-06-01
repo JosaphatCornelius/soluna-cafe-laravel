@@ -2,8 +2,8 @@
     $items = [
         ['label' => 'Home', 'url' => url('/'), 'active' => request()->is('/')],
         ['label' => 'About Us', 'url' => url('/#about'), 'active' => false],
-        ['label' => 'Product', 'url' => url('/product'), 'active' => request()->is('product')],
-        ['label' => 'Promotions', 'url' => url('/#promotions'), 'active' => false],
+        ['label' => 'Products', 'url' => url('/product'), 'active' => request()->is('product')],
+        ['label' => 'Promotions', 'url' => route('promotion'), 'active' => request()->is('promotions')],
         ['label' => 'Contact Us', 'url' => url('/contact'), 'active' => request()->is('contact')],
     ];
 @endphp
