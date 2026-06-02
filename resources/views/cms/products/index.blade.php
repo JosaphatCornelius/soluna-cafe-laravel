@@ -18,9 +18,11 @@
                     'description' => 'Manage all products in your catalog.',
                 ])
             </div>
-            <a href="{{ route('cms.products.create') }}" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-lg">
-                + Add Product
-            </a>
+            @can('create', App\Models\Product::class)
+                <a href="{{ route('cms.products.create') }}" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-lg">
+                    + Add Product
+                </a>
+            @endcan
         </div>
 
         <div class="rounded-[22px] border border-[#e5dbcf] bg-white overflow-hidden">
@@ -45,16 +47,23 @@
                             {{ $product->creator?->name ?? 'Unknown' }}
                         </div>
                         <div class="flex gap-2">
-                            <a href="{{ route('cms.products.edit', $product->id) }}" class="inline-block rounded-lg bg-amber-600 text-white font-bold py-2 px-4 text-[12px] hover:bg-amber-700">
-                                Edit
-                            </a>
-                            <form action="{{ route('cms.products.destroy', $product->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="rounded-lg bg-red-600 text-white font-bold py-2 px-4 text-[12px] hover:bg-red-700">
-                                    Delete
-                                </button>
-                            </form>
+                            @can('update', $product)
+                                <a href="{{ route('cms.products.edit', $product->id) }}" class="inline-block rounded-lg bg-amber-600 text-white font-bold py-2 px-4 text-[12px] hover:bg-amber-700">
+                                    Edit
+                                </a>
+                            @endcan
+                            @can('delete', $product)
+                                <form action="{{ route('cms.products.destroy', $product->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="rounded-lg bg-red-600 text-white font-bold py-2 px-4 text-[12px] hover:bg-red-700">
+                                        Delete
+                                    </button>
+                                </form>
+                            @endcan
+                            @cannot('update', $product)
+                                <span class="text-[13px] text-[#9b8b7a]">View only</span>
+                            @endcannot
                         </div>
                     </div>
                 @empty

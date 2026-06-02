@@ -112,6 +112,7 @@
 
   .menu-content {
     flex: 1;
+    min-width: 0;
     position: relative;
     max-width: 100%;
   }
@@ -149,7 +150,7 @@
   .carousel-container {
     position: relative;
     overflow: hidden;
-    padding: 0 150px;
+    padding: 0 60px;
   }
 
   .carousel-track {

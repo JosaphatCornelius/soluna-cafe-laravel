@@ -17,9 +17,11 @@
                 'description' => 'Create and manage website promotions.',
             ])
 
-            <a href="{{ route('cms.promotions.create') }}" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-lg">
-                + Add Promotion
-            </a>
+            @can('create', App\Models\Promotion::class)
+                <a href="{{ route('cms.promotions.create') }}" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-lg">
+                    + Add Promotion
+                </a>
+            @endcan
         </div>
 
         <div class="rounded-[22px] border border-[#e5dbcf] bg-white overflow-hidden">
@@ -40,12 +42,19 @@
                             {{ $promotion->active ? 'Active' : 'Inactive' }}
                         </div>
                         <div class="flex gap-2">
-                            <a href="{{ route('cms.promotions.edit', $promotion->id) }}" class="inline-block rounded-lg bg-amber-600 text-white font-bold py-2 px-4 text-[12px] hover:bg-amber-700">Edit</a>
-                            <form action="{{ route('cms.promotions.destroy', $promotion->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Delete this promotion?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="rounded-lg bg-red-600 text-white font-bold py-2 px-4 text-[12px] hover:bg-red-700">Delete</button>
-                            </form>
+                            @can('update', $promotion)
+                                <a href="{{ route('cms.promotions.edit', $promotion->id) }}" class="inline-block rounded-lg bg-amber-600 text-white font-bold py-2 px-4 text-[12px] hover:bg-amber-700">Edit</a>
+                            @endcan
+                            @can('delete', $promotion)
+                                <form action="{{ route('cms.promotions.destroy', $promotion->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Delete this promotion?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="rounded-lg bg-red-600 text-white font-bold py-2 px-4 text-[12px] hover:bg-red-700">Delete</button>
+                                </form>
+                            @endcan
+                            @cannot('update', $promotion)
+                                <span class="text-[13px] text-[#9b8b7a]">View only</span>
+                            @endcannot
                         </div>
                     </div>
                 @empty

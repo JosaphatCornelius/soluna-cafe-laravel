@@ -47,15 +47,18 @@
     }
 
     function updateCarousel() {
-      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-      const pageWidth = getItemsPerView() * (items[0].offsetWidth + gap);
       const maxIndex = getMaxIndex();
 
       if (currentIndex > maxIndex) {
         currentIndex = maxIndex;
       }
 
-      track.style.transform = `translateX(-${currentIndex * pageWidth}px)`;
+      // Align to the actual rendered position of the first item on this page,
+      // clamped so the final page never scrolls past the last item (no blank gap).
+      const targetItem = items[currentIndex * getItemsPerView()];
+      const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+      const offset = targetItem ? Math.min(targetItem.offsetLeft, maxScroll) : 0;
+      track.style.transform = `translateX(-${offset}px)`;
 
       const indicators = indicatorsContainer.querySelectorAll('.carousel-indicator');
       indicators.forEach((dot, index) => {

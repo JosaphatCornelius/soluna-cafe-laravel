@@ -15,8 +15,10 @@ class CheckEditorOrAdminRole
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || (!auth()->user()->isAdmin() && !auth()->user()->isEditor())) {
-            abort(403, 'Unauthorized. Admin or Editor access required.');
+        $user = auth()->user();
+
+        if (!$user || (!$user->isAdmin() && !$user->isEditor() && !$user->isUser())) {
+            abort(403, 'Unauthorized. CMS access required.');
         }
 
         return $next($request);

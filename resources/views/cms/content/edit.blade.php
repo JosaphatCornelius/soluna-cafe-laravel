@@ -70,6 +70,10 @@
             <p class="font-['Host_Grotesk'] text-[12px] font-bold uppercase tracking-[0.25em] text-[#8f5a3a] mb-3">Metadata</p>
             <div class="grid grid-cols-2 gap-4 text-[14px] text-[#5d4a3d]">
                 <div>
+                    <p class="font-bold">Page key (slug):</p>
+                    <p>{{ $content->slug }}</p>
+                </div>
+                <div>
                     <p class="font-bold">Created:</p>
                     <p>{{ $content->created_at->format('M d, Y \a\t H:i') }}</p>
                 </div>

@@ -86,13 +86,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->n
 Route::middleware(['auth', 'editorOrAdmin'])->prefix('cms')->name('cms.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     
-    // Content management
+    // Content management — edit-only (pages are defined in code; new pages can't be created here)
     Route::get('/content', [ContentController::class, 'index'])->name('content.index');
-    Route::get('/content/create', [ContentController::class, 'create'])->name('content.create');
-    Route::post('/content', [ContentController::class, 'store'])->name('content.store');
     Route::get('/content/{content}/edit', [ContentController::class, 'edit'])->name('content.edit');
     Route::put('/content/{content}', [ContentController::class, 'update'])->name('content.update');
-    Route::delete('/content/{content}', [ContentController::class, 'destroy'])->name('content.destroy');
     Route::get('/content/{content}', [ContentController::class, 'show'])->name('content.show');
     
     // Product management

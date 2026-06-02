@@ -27,7 +27,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
-            'role' => 'editor', // Default role is editor
+            'role' => 'user', // Default role is view-only user
             'email_verified_at' => now(),
         ]);
 

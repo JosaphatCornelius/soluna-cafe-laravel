@@ -65,6 +65,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if user is a view-only user (no create/update/delete in the CMS)
+     */
+    public function isUser(): bool
+    {
+        return $this->role === 'user';
+    }
+
+    /**
      * Get contents created by user
      */
     public function createdContents()

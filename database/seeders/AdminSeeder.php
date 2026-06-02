@@ -22,12 +22,12 @@ class AdminSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
 
-        // Create editor user
+        // Create view-only user (can browse the CMS but performs no actions)
         User::create([
-            'name' => 'Editor',
-            'email' => 'editor@solunacafe.local',
+            'name' => 'User',
+            'email' => 'user@solunacafe.local',
             'password' => bcrypt('password'),
-            'role' => 'editor',
+            'role' => 'user',
             'email_verified_at' => now(),
         ]);
     }

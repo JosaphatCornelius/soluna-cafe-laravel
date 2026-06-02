@@ -35,11 +35,13 @@
                         <div class="text-[14px] text-[#5d4a3d]">{{ $message->created_at->format('M d, Y') }}</div>
                         <div class="flex gap-2">
                             <a href="{{ route('cms.contacts.show', $message->id) }}" class="inline-block rounded-lg bg-amber-600 text-white font-bold py-2 px-4 text-[12px] hover:bg-amber-700">View</a>
-                            <form action="{{ route('cms.contacts.destroy', $message->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Delete this message?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="rounded-lg bg-red-600 text-white font-bold py-2 px-4 text-[12px] hover:bg-red-700">Delete</button>
-                            </form>
+                            @can('delete', $message)
+                                <form action="{{ route('cms.contacts.destroy', $message->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Delete this message?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="rounded-lg bg-red-600 text-white font-bold py-2 px-4 text-[12px] hover:bg-red-700">Delete</button>
+                                </form>
+                            @endcan
                         </div>
                     </div>
                 @empty

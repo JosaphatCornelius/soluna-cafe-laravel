@@ -14,12 +14,8 @@
             @include('components.cms.section-header', [
                 'eyebrow' => 'Manage Content',
                 'title' => 'Content Pages',
-                'description' => 'Edit the main content pages of your website.',
+                'description' => 'Edit the text of the main pages of your website.',
             ])
-
-            <a href="{{ route('cms.content.create') }}" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-lg">
-                + Add Page
-            </a>
         </div>
 
         <div class="rounded-[22px] border border-[#e5dbcf] bg-white overflow-hidden">
@@ -40,16 +36,13 @@
                             {{ $content->created_at->format('M d, Y') }}
                         </div>
                         <div class="flex gap-2">
-                            <a href="{{ route('cms.content.edit', $content->id) }}" class="inline-block rounded-lg bg-amber-600 text-white font-bold py-2 px-4 text-[12px] hover:bg-amber-700">
-                                Edit
-                            </a>
-                            <form action="{{ route('cms.content.destroy', $content->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Delete this content page?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="rounded-lg bg-red-600 text-white font-bold py-2 px-4 text-[12px] hover:bg-red-700">
-                                    Delete
-                                </button>
-                            </form>
+                            @can('update', $content)
+                                <a href="{{ route('cms.content.edit', $content->id) }}" class="inline-block rounded-lg bg-amber-600 text-white font-bold py-2 px-4 text-[12px] hover:bg-amber-700">
+                                    Edit
+                                </a>
+                            @else
+                                <span class="text-[13px] text-[#9b8b7a]">View only</span>
+                            @endcan
                         </div>
                     </div>
                 @empty
