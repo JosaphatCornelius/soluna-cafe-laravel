@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(/mnt/c/xampp/php/php.exe artisan *)"
-    ]
-  }
-}
