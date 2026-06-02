@@ -44,6 +44,16 @@
                 </div>
 
                 <div>
+                    <label for="tag" class="block font-['Host_Grotesk'] font-bold text-[14px] text-[#241810] mb-2">Tag / Badge</label>
+                    <input type="text" name="tag" id="tag" value="{{ old('tag', $promotion->tag) }}" class="w-full px-4 py-3 border border-[#d8c9b7] rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" />
+                </div>
+
+                <div>
+                    <label for="cta" class="block font-['Host_Grotesk'] font-bold text-[14px] text-[#241810] mb-2">CTA Button Text</label>
+                    <input type="text" name="cta" id="cta" value="{{ old('cta', $promotion->cta) }}" class="w-full px-4 py-3 border border-[#d8c9b7] rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" />
+                </div>
+
+                <div>
                     <label for="image_url" class="block font-['Host_Grotesk'] font-bold text-[14px] text-[#241810] mb-2">Image URL</label>
                     <input type="url" name="image_url" id="image_url" value="{{ old('image_url', $promotion->image_url) }}" class="w-full px-4 py-3 border border-[#d8c9b7] rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" />
                 </div>

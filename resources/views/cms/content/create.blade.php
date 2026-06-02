@@ -31,17 +31,17 @@
 
                 <div>
                     <label for="title" class="block font-['Host_Grotesk'] font-bold text-[14px] text-[#241810] mb-2">Title</label>
-                    <input type="text" name="title" id="title" value="{{ old('title') }}" class="w-full px-4 py-3 border border-[#d8c9b7] rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Page title" />
+                    <input type="text" name="title" id="title" value="{{ old('title') }}" class="w-full px-4 py-3 border border-[#d8c9b7] rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" />
                 </div>
 
                 <div>
                     <label for="slug" class="block font-['Host_Grotesk'] font-bold text-[14px] text-[#241810] mb-2">Slug</label>
-                    <input type="text" name="slug" id="slug" value="{{ old('slug') }}" class="w-full px-4 py-3 border border-[#d8c9b7] rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="home, about-us, contact-us" />
+                    <input type="text" name="slug" id="slug" value="{{ old('slug') }}" class="w-full px-4 py-3 border border-[#d8c9b7] rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" />
                 </div>
 
                 <div>
                     <label for="description" class="block font-['Host_Grotesk'] font-bold text-[14px] text-[#241810] mb-2">Description</label>
-                    <textarea name="description" id="description" rows="10" class="w-full px-4 py-3 border border-[#d8c9b7] rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Enter the page content...">{{ old('description') }}</textarea>
+                    <textarea name="description" id="description" rows="10" class="w-full px-4 py-3 border border-[#d8c9b7] rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">{{ old('description') }}</textarea>
                 </div>
 
                 <div class="pt-4 border-t border-[#e5dbcf]">

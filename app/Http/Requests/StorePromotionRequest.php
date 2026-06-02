@@ -17,7 +17,9 @@ class StorePromotionRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'alpha_dash', 'unique:promotions,slug'],
             'description' => ['required', 'string'],
-            'image_url' => ['nullable', 'url', 'max:255'],
+            'tag' => ['nullable', 'string', 'max:255'],
+            'cta' => ['nullable', 'string', 'max:255'],
+            'image_url' => ['nullable', 'string', 'max:255'],
             'active' => ['nullable', 'boolean'],
         ];
     }

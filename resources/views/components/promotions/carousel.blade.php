@@ -1,33 +1,9 @@
-@php
-    $slides = [
-        [
-            'title' => 'Taste the season',
-            'subtitle' => 'Autumn Espresso Duo',
-            'description' => 'Enjoy two handcrafted espresso beverages plus a pastry at a special bundled price, available all week.',
-            'tag' => 'Seasonal',
-            'image' => asset('images/promotions/promo-slide.png'),
-            'cta' => 'Reserve your table',
-        ],
-        [
-            'title' => 'Afternoon comfort',
-            'subtitle' => 'Happy Hour Sips',
-            'description' => 'Select your favorite drinks between 4–6 PM and receive 20% off on all snacks and desserts.',
-            'tag' => 'Happy Hour',
-            'image' => asset('images/promotions/promo-slide.png'),
-            'cta' => 'See happy hour details',
-        ],
-        [
-            'title' => 'Bring a friend',
-            'subtitle' => 'Coffee for Two',
-            'description' => 'Share a chilled latte and a signature sandwich with a friend for one easy price.',
-            'tag' => 'Pairing',
-            'image' => asset('images/promotions/promo-slide.png'),
-            'cta' => 'Book your spot',
-        ],
-    ];
-@endphp
-
 <section class="bg-[#f4ede3] px-6 py-16 md:px-15">
+    @if (empty($slides))
+        <div class="mx-auto max-w-6xl rounded-3xl bg-[#23160f] px-10 py-16 text-center text-white shadow-[0_30px_80px_rgba(0,0,0,0.18)]">
+            <p class="text-lg text-[#e8dcc8]">No promotions available at the moment.</p>
+        </div>
+    @else
     <div class="mx-auto max-w-6xl overflow-hidden rounded-3xl bg-[#23160f] px-5 py-8 shadow-[0_30px_80px_rgba(0,0,0,0.18)] md:px-10 md:py-12">
         <div class="relative">
             <div class="carousel-track flex transition-transform duration-500 ease-in-out" data-carousel-track>
@@ -55,10 +31,11 @@
 
         <div class="mt-6 flex justify-center gap-3">
             @foreach ($slides as $index => $slide)
-                <button type="button" class="promo-dot h-3.5 w-3.5 rounded-full bg-white/40 transition" data-slide="{{ $index }}" aria-label="Show slide {{ $index + 1 }}"></button>
+                <button type="button" class="promo-dot h-3.5 w-3.5 rounded-full bg-white opacity-40 transition" data-slide="{{ $index }}" aria-label="Show slide {{ $index + 1 }}"></button>
             @endforeach
         </div>
     </div>
+    @endif
 </section>
 
 @push('scripts')
@@ -75,7 +52,10 @@
 
         const updateCarousel = function () {
             track.style.transform = `translateX(-${currentIndex * 100}%)`;
-            dots.forEach((dot, index) => dot.classList.toggle('bg-white', index === currentIndex));
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('opacity-100', index === currentIndex);
+                dot.classList.toggle('opacity-40', index !== currentIndex);
+            });
         };
 
         const showPrevious = function () {

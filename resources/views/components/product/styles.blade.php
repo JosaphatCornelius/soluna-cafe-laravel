@@ -159,7 +159,7 @@
   }
 
   .carousel-item {
-    flex: 0 0 calc(33.333% - 20px);
+    flex: 0 0 calc(33.333% - 33.333px);
     text-align: center;
   }
 
@@ -286,7 +286,7 @@
   /* ===== RESPONSIVE ===== */
   @media (max-width: 992px) {
     .carousel-item {
-      flex: 0 0 calc(50% - 15px);
+      flex: 0 0 calc(50% - 25px);
     }
   }
 

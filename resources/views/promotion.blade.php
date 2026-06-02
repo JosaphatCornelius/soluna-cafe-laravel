@@ -51,5 +51,5 @@
         </div>
     </section>
 
-    @include('components.promotions.contact')
+    @include('components.contact.form')
 @endsection

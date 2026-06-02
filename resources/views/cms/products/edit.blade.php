@@ -65,7 +65,6 @@
                         id="category"
                         value="{{ old('category', $product->category) }}"
                         class="w-full px-4 py-3 border border-[#d8c9b7] rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                        placeholder="e.g., Drink, Food, Dessert"
                     />
                 </div>
 
@@ -79,7 +78,6 @@
                         id="image_url"
                         value="{{ old('image_url', $product->image_url) }}"
                         class="w-full px-4 py-3 border border-[#d8c9b7] rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                        placeholder="https://... or images/filename.jpg"
                     />
                 </div>
 
@@ -94,7 +92,6 @@
                         value="{{ old('price', $product->price) }}"
                         min="0"
                         class="w-full px-4 py-3 border border-[#d8c9b7] rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                        placeholder="e.g., 35000"
                     />
                 </div>
 

@@ -21,6 +21,11 @@
             'active' => request()->routeIs('cms.promotions.*'),
         ],
         [
+            'label' => 'Recommendations',
+            'route' => 'cms.recommendations.index',
+            'active' => request()->routeIs('cms.recommendations.*'),
+        ],
+        [
             'label' => 'Messages',
             'route' => 'cms.contacts.index',
             'active' => request()->routeIs('cms.contacts.*'),
@@ -56,6 +61,6 @@
 
     <div class="mt-8 rounded-[22px] bg-white/10 p-4 backdrop-blur-sm">
         <p class="font-['Host_Grotesk'] text-[13px] font-bold uppercase tracking-[0.28em] text-white/55">Status</p>
-        <p class="mt-2 font-['Host_Grotesk'] text-[15px] leading-relaxed text-white/80">This dashboard is a front-end placeholder. Connect your CMS actions later.</p>
+        <p class="mt-2 font-['Host_Grotesk'] text-[15px] leading-relaxed text-white/80">Signed in as {{ auth()->user()->name }}. Changes you make here update the live site.</p>
     </div>
 </aside>

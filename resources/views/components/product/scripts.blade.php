@@ -47,14 +47,15 @@
     }
 
     function updateCarousel() {
-      const itemWidth = items[0].offsetWidth + 30;
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      const pageWidth = getItemsPerView() * (items[0].offsetWidth + gap);
       const maxIndex = getMaxIndex();
 
       if (currentIndex > maxIndex) {
         currentIndex = maxIndex;
       }
 
-      track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+      track.style.transform = `translateX(-${currentIndex * pageWidth}px)`;
 
       const indicators = indicatorsContainer.querySelectorAll('.carousel-indicator');
       indicators.forEach((dot, index) => {

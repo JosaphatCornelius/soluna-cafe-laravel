@@ -8,18 +8,64 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\RecommendationController;
+use App\Models\Content;
+use App\Models\Product;
+use App\Models\Promotion;
+use App\Models\Recommendation;
 
 // Public routes
 Route::get('/', function () {
-    return view('welcome');
+    $story = Content::where('slug', 'home')->first();
+
+    $recommendations = Recommendation::orderBy('id')->get()->map(function (Recommendation $recommendation) {
+        $image = $recommendation->image_url;
+        if ($image && !filter_var($image, FILTER_VALIDATE_URL)) {
+            $image = asset($image);
+        }
+
+        return [
+            'name' => $recommendation->name,
+            'src' => $image ?: asset('images/avocado.jpg'),
+        ];
+    })->values()->toArray();
+
+    return view('welcome', compact('story', 'recommendations'));
 });
 
 Route::get('/product', function () {
-    return view('product');
+    $categories = Product::orderBy('category')
+        ->get()
+        ->groupBy(fn (Product $product) => $product->category ?: 'Menu')
+        ->map(fn ($items) => $items->map(fn (Product $product) => [
+            'image' => ($product->image_url && !filter_var($product->image_url, FILTER_VALIDATE_URL))
+                ? asset($product->image_url)
+                : ($product->image_url ?: asset('images/avocado.jpg')),
+            'title' => $product->name,
+            'description' => $product->description,
+            'price' => 'Rp ' . number_format($product->price ?? 0, 0, ',', '.'),
+        ])->toArray())
+        ->toArray();
+
+    return view('product', compact('categories'));
 });
 
 Route::get('/promotion', function () {
-    return view('promotion');
+    $slides = Promotion::where('active', true)
+        ->get()
+        ->map(fn (Promotion $promotion) => [
+            'title' => $promotion->tag ?? 'Promotion',
+            'subtitle' => $promotion->title,
+            'description' => $promotion->description,
+            'tag' => $promotion->tag ?? 'Featured',
+            'image' => ($promotion->image_url && !filter_var($promotion->image_url, FILTER_VALIDATE_URL))
+                ? asset($promotion->image_url)
+                : ($promotion->image_url ?: asset('images/promotions/promo-slide.png')),
+            'cta' => $promotion->cta ?? 'Learn more',
+        ])
+        ->toArray();
+
+    return view('promotion', compact('slides'));
 })->name('promotion');
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
@@ -66,6 +112,14 @@ Route::middleware(['auth', 'editorOrAdmin'])->prefix('cms')->name('cms.')->group
     Route::put('/promotions/{promotion}', [PromotionController::class, 'update'])->name('promotions.update');
     Route::delete('/promotions/{promotion}', [PromotionController::class, 'destroy'])->name('promotions.destroy');
     Route::get('/promotions/{promotion}', [PromotionController::class, 'show'])->name('promotions.show');
+
+    // Recommendation management (homepage recommendation carousel)
+    Route::get('/recommendations', [RecommendationController::class, 'index'])->name('recommendations.index');
+    Route::get('/recommendations/create', [RecommendationController::class, 'create'])->name('recommendations.create');
+    Route::post('/recommendations', [RecommendationController::class, 'store'])->name('recommendations.store');
+    Route::get('/recommendations/{recommendation}/edit', [RecommendationController::class, 'edit'])->name('recommendations.edit');
+    Route::put('/recommendations/{recommendation}', [RecommendationController::class, 'update'])->name('recommendations.update');
+    Route::delete('/recommendations/{recommendation}', [RecommendationController::class, 'destroy'])->name('recommendations.destroy');
 
     // Contact messages
     Route::get('/contacts', [ContactMessageController::class, 'index'])->name('contacts.index');

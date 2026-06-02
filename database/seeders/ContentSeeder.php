@@ -20,11 +20,11 @@ class ContentSeeder extends Seeder
             return;
         }
 
-        // Create default content pages
+        // The "home" record drives the homepage "Our Story" section (welcome.blade.php).
         Content::create([
             'slug' => 'home',
-            'title' => 'Home',
-            'description' => 'Welcome to Soluna Cafe. A place for great coffee and community.',
+            'title' => 'Our Story',
+            'description' => 'The Heritage of Soluna Cafe Our story began on October 24th, 2022, born from a deep-rooted passion for authentic flavors and the art of hospitality. What started as a vision to create the perfect community getaway has evolved into Soluna Cafe, a place where every corner tells a story and every guest is treated like family. Since our first day, we have remained committed to the idea that a cafe should be more than just a place to eat—it should be an experience.',
             'created_by' => $adminUser->id,
             'updated_by' => $adminUser->id,
         ]);

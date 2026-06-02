@@ -3,7 +3,7 @@
         ['label' => 'Home', 'url' => url('/'), 'active' => request()->is('/')],
         ['label' => 'About Us', 'url' => url('/#about'), 'active' => false],
         ['label' => 'Products', 'url' => url('/product'), 'active' => request()->is('product')],
-        ['label' => 'Promotions', 'url' => route('promotion'), 'active' => request()->is('promotions')],
+        ['label' => 'Promotions', 'url' => route('promotion'), 'active' => request()->is('promotion')],
         ['label' => 'Contact Us', 'url' => url('/contact'), 'active' => request()->is('contact')],
     ];
 @endphp

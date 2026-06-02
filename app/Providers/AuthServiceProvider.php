@@ -6,10 +6,12 @@ use App\Models\Content;
 use App\Models\ContactMessage;
 use App\Models\Product;
 use App\Models\Promotion;
+use App\Models\Recommendation;
 use App\Policies\ContactMessagePolicy;
 use App\Policies\ContentPolicy;
 use App\Policies\ProductPolicy;
 use App\Policies\PromotionPolicy;
+use App\Policies\RecommendationPolicy;
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -24,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         ContactMessage::class => ContactMessagePolicy::class,
         Product::class => ProductPolicy::class,
         Promotion::class => PromotionPolicy::class,
+        Recommendation::class => RecommendationPolicy::class,
     ];
 
     /**

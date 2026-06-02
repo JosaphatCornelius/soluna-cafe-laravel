@@ -2,28 +2,18 @@
 
 namespace App\Models;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Promotion extends Model
+class Recommendation extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'slug',
-        'description',
-        'tag',
-        'cta',
+        'name',
         'image_url',
-        'active',
         'created_by',
         'updated_by',
-    ];
-
-    protected $casts = [
-        'active' => 'boolean',
     ];
 
     public function creator()
