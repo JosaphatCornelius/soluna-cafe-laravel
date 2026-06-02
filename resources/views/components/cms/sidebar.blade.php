@@ -1,12 +1,30 @@
 @php
-    $items = [
-        ['label' => 'Overview', 'href' => '#overview', 'active' => true],
-        ['label' => 'Homepage', 'href' => '#homepage', 'active' => false],
-        ['label' => 'Products', 'href' => '#products', 'active' => false],
-        ['label' => 'Promotions', 'href' => '#promotions', 'active' => false],
-        ['label' => 'Contact', 'href' => '#contact', 'active' => false],
-        ['label' => 'Media', 'href' => '#media', 'active' => false],
-        ['label' => 'Messages', 'href' => '#messages', 'active' => false],
+    $navItems = [
+        [
+            'label' => 'Overview',
+            'route' => 'cms.dashboard',
+            'active' => request()->routeIs('cms.dashboard'),
+        ],
+        [
+            'label' => 'Homepage',
+            'route' => 'cms.content.index',
+            'active' => request()->routeIs('cms.content.*'),
+        ],
+        [
+            'label' => 'Products',
+            'route' => 'cms.products.index',
+            'active' => request()->routeIs('cms.products.*'),
+        ],
+        [
+            'label' => 'Promotions',
+            'route' => 'cms.promotions.index',
+            'active' => request()->routeIs('cms.promotions.*'),
+        ],
+        [
+            'label' => 'Messages',
+            'route' => 'cms.contacts.index',
+            'active' => request()->routeIs('cms.contacts.*'),
+        ],
     ];
 @endphp
 
@@ -25,9 +43,9 @@
     <nav class="mt-8">
         <p class="font-['Host_Grotesk'] text-[12px] font-bold uppercase tracking-[0.3em] text-white/45">Navigation</p>
         <ul class="mt-4 space-y-2">
-            @foreach ($items as $item)
+            @foreach ($navItems as $item)
                 <li>
-                    <a href="{{ $item['href'] }}" class="flex items-center justify-between rounded-[16px] px-4 py-3 font-['Host_Grotesk'] text-[15px] transition-colors duration-200 {{ $item['active'] ? 'bg-white text-[#3f2719] font-bold' : 'text-white/75 hover:bg-white/10 hover:text-white' }}">
+                    <a href="{{ route($item['route']) }}" class="flex items-center justify-between rounded-[16px] px-4 py-3 font-['Host_Grotesk'] text-[15px] transition-colors duration-200 {{ $item['active'] ? 'bg-white text-[#3f2719] font-bold' : 'text-white/75 hover:bg-white/10 hover:text-white' }}">
                         <span>{{ $item['label'] }}</span>
                         <span class="text-[12px] {{ $item['active'] ? 'text-[#3f2719]/70' : 'text-white/35' }}">0{{ $loop->iteration }}</span>
                     </a>

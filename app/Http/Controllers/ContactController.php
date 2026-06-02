@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreContactMessageRequest;
+use App\Services\ContactMessageService;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+    protected ContactMessageService $contactMessageService;
+
+    public function __construct(ContactMessageService $contactMessageService)
+    {
+        $this->contactMessageService = $contactMessageService;
+    }
+
     public function index()
     {
         return view('contact');
     }
 
-    public function submit(Request $request)
+    public function submit(StoreContactMessageRequest $request)
     {
-        // Basic validation (extend as needed)
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'message' => 'required|string',
-        ]);
-
-        // TODO: handle submission (save, email, etc.)
+        $this->contactMessageService->create($request->validated());
 
         return back()->with('status', 'Thanks — we received your message.');
     }

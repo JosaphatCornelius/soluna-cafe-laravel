@@ -121,5 +121,5 @@
     updateCarousel();
   }
 
-  ['drink', 'food', 'dessert'].forEach(tab => initCarousel(tab));
+  tabs.forEach(tab => initCarousel(tab.getAttribute('data-tab')));
 </script>
