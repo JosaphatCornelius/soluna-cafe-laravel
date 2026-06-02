@@ -47,14 +47,18 @@
     }
 
     function updateCarousel() {
-      const itemWidth = items[0].offsetWidth + 30;
       const maxIndex = getMaxIndex();
 
       if (currentIndex > maxIndex) {
         currentIndex = maxIndex;
       }
 
-      track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+      // Align to the actual rendered position of the first item on this page,
+      // clamped so the final page never scrolls past the last item (no blank gap).
+      const targetItem = items[currentIndex * getItemsPerView()];
+      const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+      const offset = targetItem ? Math.min(targetItem.offsetLeft, maxScroll) : 0;
+      track.style.transform = `translateX(-${offset}px)`;
 
       const indicators = indicatorsContainer.querySelectorAll('.carousel-indicator');
       indicators.forEach((dot, index) => {
@@ -121,5 +125,5 @@
     updateCarousel();
   }
 
-  ['drink', 'food', 'dessert'].forEach(tab => initCarousel(tab));
+  tabs.forEach(tab => initCarousel(tab.getAttribute('data-tab')));
 </script>

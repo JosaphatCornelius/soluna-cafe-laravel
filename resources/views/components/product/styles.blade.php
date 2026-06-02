@@ -112,6 +112,7 @@
 
   .menu-content {
     flex: 1;
+    min-width: 0;
     position: relative;
     max-width: 100%;
   }
@@ -149,7 +150,7 @@
   .carousel-container {
     position: relative;
     overflow: hidden;
-    padding: 0 150px;
+    padding: 0 60px;
   }
 
   .carousel-track {
@@ -159,7 +160,7 @@
   }
 
   .carousel-item {
-    flex: 0 0 calc(33.333% - 20px);
+    flex: 0 0 calc(33.333% - 33.333px);
     text-align: center;
   }
 
@@ -286,7 +287,7 @@
   /* ===== RESPONSIVE ===== */
   @media (max-width: 992px) {
     .carousel-item {
-      flex: 0 0 calc(50% - 15px);
+      flex: 0 0 calc(50% - 25px);
     }
   }
 

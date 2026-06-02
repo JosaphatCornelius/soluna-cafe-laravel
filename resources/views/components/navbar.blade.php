@@ -3,7 +3,7 @@
         ['label' => 'Home', 'url' => url('/'), 'active' => request()->is('/')],
         ['label' => 'About Us', 'url' => url('/#about'), 'active' => false],
         ['label' => 'Products', 'url' => url('/product'), 'active' => request()->is('product')],
-        ['label' => 'Promotions', 'url' => route('promotion'), 'active' => request()->is('promotions')],
+        ['label' => 'Promotions', 'url' => route('promotion'), 'active' => request()->is('promotion')],
         ['label' => 'Contact Us', 'url' => url('/contact'), 'active' => request()->is('contact')],
     ];
 @endphp
@@ -83,11 +83,31 @@
 </style>
 
 <nav class="floating-nav">
-    <ul>
+    <ul style="padding: 4px;">
         @foreach ($items as $item)
             <li class="{{ $item['active'] ? 'active' : '' }}">
                 <a href="{{ $item['url'] }}" @if ($item['active']) aria-current="page" @endif>{{ $item['label'] }}</a>
             </li>
         @endforeach
+        @auth
+            <li>
+                <a href="{{ route('cms.dashboard') }}" style="background: #8f5a3a; color: white;">CMS</a>
+            </li>
+            <li>
+                <form action="{{ route('logout') }}" method="POST" style="display: contents;">
+                    @csrf
+                    <button type="submit" style="color: #333; border: none; font-family: 'Host Grotesk', sans-serif; font-size: 16px; font-weight: 500; border-radius: 25px; cursor: pointer; transition: all 0.3s ease;">
+                        Logout
+                    </button>
+                </form>
+            </li>
+        @else
+            <li>
+                <a href="{{ route('login') }}" style="background: #8f5a3a; color: white;">Login</a>
+            </li>
+            <li>
+                <a href="{{ route('register') }}" style="background: #8f5a3a; color: white;">Register</a>
+            </li>
+        @endauth
     </ul>
 </nav>

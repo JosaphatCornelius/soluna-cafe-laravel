@@ -349,11 +349,11 @@
     </section>
 
     <div class="our-story">
-        <h1>Our Story</h1>
+        <h1>{{ $story->title ?? 'Our Story' }}</h1>
 
         <div class="card-story">
             <img src="{{ asset('about.jpg') }}" alt="Our Story">
-            <p>The Heritage of Soluna Cafe Our story began on October 24th, 2022, born from a deep-rooted passion for authentic flavors and the art of hospitality. What started as a vision to create the perfect community getaway has evolved into Soluna Cafe, a place where every corner tells a story and every guest is treated like family. Since our first day, we have remained committed to the idea that a cafe should be more than just a place to eat—it should be an experience.</p>
+            <p>{{ $story->description ?? 'The Heritage of Soluna Cafe Our story began on October 24th, 2022, born from a deep-rooted passion for authentic flavors and the art of hospitality. What started as a vision to create the perfect community getaway has evolved into Soluna Cafe, a place where every corner tells a story and every guest is treated like family. Since our first day, we have remained committed to the idea that a cafe should be more than just a place to eat—it should be an experience.' }}</p>
         </div>
     </div>
 
@@ -362,16 +362,20 @@
             <h1>Recommendation<br>Menu</h1>
         </div>
 
+        @php
+            $firstRec = $recommendations[0] ?? ['src' => asset('images/avocado.jpg'), 'name' => 'Avocado coffee'];
+        @endphp
+
         <div class="menu-container">
             <div class="menu-card">
                 <div class="menu-image">
-                    <img src="{{ asset('images/avocado.jpg') }}" alt="Cappuccino">
+                    <img src="{{ $firstRec['src'] }}" alt="{{ $firstRec['name'] }}">
                 </div>
 
                 <div class="menu-footer">
                     <span class="arrow">&#10094;</span>
 
-                    <div class="menu-name">Avocado coffee</div>
+                    <div class="menu-name">{{ $firstRec['name'] }}</div>
 
                     <span class="arrow">&#10095;</span>
                 </div>
@@ -405,19 +409,23 @@
     <x-footer />
 
     <script>
-        const slides = [{
-                src: '{{ asset("images/avocado.jpg") }}',
-                name: 'Avocado Coffe'
-            },
-            {
-                src: '{{ asset("images/moctail.jpg") }}',
-                name: 'Coffee Mocktail'
-            },
-            {
-                src: '{{ asset("images/soffle.jpg") }}',
-                name: 'Souffle Pancake'
-            },
-        ];
+        let slides = @json($recommendations);
+
+        if (!slides.length) {
+            slides = [{
+                    src: '{{ asset("images/avocado.jpg") }}',
+                    name: 'Avocado Coffe'
+                },
+                {
+                    src: '{{ asset("images/moctail.jpg") }}',
+                    name: 'Coffee Mocktail'
+                },
+                {
+                    src: '{{ asset("images/soffle.jpg") }}',
+                    name: 'Souffle Pancake'
+                },
+            ];
+        }
 
         let currentSlide = 0;
         const menuImage = document.querySelector('.menu-image img');
