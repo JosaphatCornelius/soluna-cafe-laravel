@@ -96,6 +96,7 @@ Route::middleware(['auth', 'editorOrAdmin'])->prefix('cms')->name('cms.')->group
     
     // Content management — edit-only (pages are defined in code; new pages can't be created here)
     Route::get('/content', [ContentController::class, 'index'])->name('content.index');
+    Route::get('/about', [ContentController::class, 'about'])->name('about.index');
     Route::get('/content/{content}/edit', [ContentController::class, 'edit'])->name('content.edit');
     Route::put('/content/{content}', [ContentController::class, 'update'])->name('content.update');
     Route::get('/content/{content}', [ContentController::class, 'show'])->name('content.show');

@@ -23,9 +23,16 @@
       font-weight: 700;
     }  </style>
 </head>
-<body class="bg-[#F0F0E6] text-[#2c2623] font-['Host_Grotesk'] min-h-screen flex items-center justify-center p-6 md:p-12">
+<body class="bg-[#F0F0E6] text-[#2c2623] font-['Host_Grotesk'] min-h-screen">
 
-  <div class="max-w-7xl w-full grid grid-cols-1 md:grid-cols-12 gap-8 relative min-h-144 md:px-8">
+  @include('components.navbar')
+
+  <section class="relative min-h-[70vh] flex items-center justify-center text-center bg-cover bg-center"
+           style="background-image: linear-gradient(rgba(20,15,10,0.6), rgba(20,15,10,0.45)), url('{{ asset('about.jpg') }}');">
+    <h1 class="font-tulisan text-white text-5xl md:text-6xl tracking-wide px-6">Our Story</h1>
+  </section>
+
+  <div class="max-w-7xl w-full mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 relative min-h-144 p-6 md:p-12 md:px-8">
 
     <div class="md:col-span-3 flex flex-col pt-4 pr-5"> 
       <h1 class="text-4xl font-bold tracking-wide mb-12">About us.</h1>
@@ -95,6 +102,8 @@
         </section>
         </div>
     </div>
+
+    @include('components.footer')
 
     <script>
       document.addEventListener('DOMContentLoaded', function () {

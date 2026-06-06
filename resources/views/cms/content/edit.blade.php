@@ -20,7 +20,7 @@
                 <p class="font-['Host_Grotesk'] text-[12px] font-bold uppercase tracking-[0.35em] text-[#8f5a3a]">Edit Content</p>
                 <h1 class="mt-2 font-['Host_Grotesk'] text-[32px] font-bold text-[#241810]">{{ $content->title }}</h1>
             </div>
-            <a href="{{ route('cms.content.index') }}" class="text-amber-600 hover:text-amber-700 font-bold">
+            <a href="{{ route($backRoute) }}" class="text-amber-600 hover:text-amber-700 font-bold">
                 ← Back to list
             </a>
         </div>
@@ -72,7 +72,7 @@
                     <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-lg">
                         Save Changes
                     </button>
-                    <a href="{{ route('cms.content.index') }}" class="ml-4 inline-block text-[#5d4a3d] hover:text-[#241810]">
+                    <a href="{{ route($backRoute) }}" class="ml-4 inline-block text-[#5d4a3d] hover:text-[#241810]">
                         Cancel
                     </a>
                 </div>

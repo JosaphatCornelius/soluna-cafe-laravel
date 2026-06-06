@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Content;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -20,6 +21,26 @@ class ContentService extends BaseService
     public function getBySlug(string $slug): Content
     {
         return Content::where('slug', $slug)->firstOrFail();
+    }
+
+    /**
+     * Get content rows whose slug is in the given list, ordered to match it.
+     */
+    public function getBySlugs(array $slugs): Collection
+    {
+        return Content::whereIn('slug', $slugs)
+            ->orderByRaw('FIELD(slug, ?' . str_repeat(', ?', count($slugs) - 1) . ')', $slugs)
+            ->get();
+    }
+
+    /**
+     * Get content rows excluding the given slugs.
+     */
+    public function getExcludingSlugs(array $slugs): Collection
+    {
+        return Content::whereNotIn('slug', $slugs)
+            ->orderBy($this->orderColumn, $this->orderDirection)
+            ->get();
     }
 
     public function create(array $data, ?User $user = null): Model

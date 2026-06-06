@@ -1,4 +1,7 @@
 @php
+    $routeContent = request()->route('content');
+    $editingAbout = $routeContent instanceof \App\Models\Content && $routeContent->isAboutSection();
+
     $navItems = [
         [
             'label' => 'Overview',
@@ -8,7 +11,12 @@
         [
             'label' => 'Homepage',
             'route' => 'cms.content.index',
-            'active' => request()->routeIs('cms.content.*'),
+            'active' => request()->routeIs('cms.content.*') && ! $editingAbout,
+        ],
+        [
+            'label' => 'About Us',
+            'route' => 'cms.about.index',
+            'active' => request()->routeIs('cms.about.*') || $editingAbout,
         ],
         [
             'label' => 'Products',
