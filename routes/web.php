@@ -9,6 +9,7 @@ use App\Http\Controllers\ContentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RecommendationController;
+use App\Http\Controllers\UserController;
 use App\Models\Content;
 use App\Models\Product;
 use App\Models\Promotion;
@@ -131,4 +132,14 @@ Route::middleware(['auth', 'cms'])->prefix('cms')->name('cms.')->group(function 
     Route::get('/contacts', [ContactMessageController::class, 'index'])->name('contacts.index');
     Route::get('/contacts/{contactMessage}', [ContactMessageController::class, 'show'])->name('contacts.show');
     Route::delete('/contacts/{contactMessage}', [ContactMessageController::class, 'destroy'])->name('contacts.destroy');
+
+    // User management (admin only)
+    Route::middleware('admin')->group(function () {
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+        Route::post('/users', [UserController::class, 'store'])->name('users.store');
+        Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    });
 });

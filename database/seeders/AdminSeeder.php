@@ -17,7 +17,7 @@ class AdminSeeder extends Seeder
         User::create([
             'name' => 'Admin',
             'email' => 'admin@solunacafe.local',
-            'password' => bcrypt('password'),
+            'password' => bcrypt('admin'),
             'role' => 'admin',
             'email_verified_at' => now(),
         ]);
