@@ -4,64 +4,37 @@ namespace App\Services;
 
 use App\Models\Content;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class ContentService
+class ContentService extends BaseService
 {
-    /**
-     * Get all content
-     */
-    public function getAll()
+    protected function modelClass(): string
     {
-        return Content::all();
-    }
-
-    /**
-     * Get content by ID
-     */
-    public function getById($id)
-    {
-        return Content::findOrFail($id);
+        return Content::class;
     }
 
     /**
      * Get content by slug
      */
-    public function getBySlug($slug)
+    public function getBySlug(string $slug): Content
     {
         return Content::where('slug', $slug)->firstOrFail();
     }
 
-    /**
-     * Create new content
-     */
-    public function create(array $data, User $user): Content
+    public function create(array $data, ?User $user = null): Model
     {
         $data['slug'] = $data['slug'] ?? Str::slug($data['title']);
-        $data['created_by'] = $user->id;
-        $data['updated_by'] = $user->id;
 
-        return Content::create($data);
+        return parent::create($data, $user);
     }
 
-    /**
-     * Update content
-     */
-    public function update(Content $content, array $data, User $user): Content
+    public function update(Model $model, array $data, ?User $user = null): Model
     {
-        $data['slug'] = $data['slug'] ?? Str::slug($data['title']);
-        $data['updated_by'] = $user->id;
+        // The slug is a fixed page key referenced from code/routes, so it is
+        // never regenerated on update — only the editable fields change.
+        unset($data['slug']);
 
-        $content->update($data);
-
-        return $content;
-    }
-
-    /**
-     * Delete content
-     */
-    public function delete(Content $content): bool
-    {
-        return $content->delete();
+        return parent::update($model, $data, $user);
     }
 }

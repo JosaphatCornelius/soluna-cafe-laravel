@@ -2,67 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Cms\CrudController;
 use App\Http\Requests\StoreRecommendationRequest;
 use App\Http\Requests\UpdateRecommendationRequest;
 use App\Models\Recommendation;
+use App\Services\Contracts\CrudServiceInterface;
 use App\Services\RecommendationService;
 
-class RecommendationController extends Controller
+class RecommendationController extends CrudController
 {
-    protected RecommendationService $recommendationService;
-
-    public function __construct(RecommendationService $recommendationService)
+    public function __construct(protected RecommendationService $recommendationService)
     {
-        $this->recommendationService = $recommendationService;
     }
 
-    public function index()
+    protected function service(): CrudServiceInterface
     {
-        $this->authorize('viewAny', Recommendation::class);
-
-        $recommendations = $this->recommendationService->getAll();
-
-        return view('cms.recommendations.index', ['recommendations' => $recommendations]);
+        return $this->recommendationService;
     }
 
-    public function create()
+    protected function modelClass(): string
     {
-        $this->authorize('create', Recommendation::class);
-
-        return view('cms.recommendations.create');
+        return Recommendation::class;
     }
 
-    public function store(StoreRecommendationRequest $request)
+    protected function resourceName(): string
     {
-        $this->authorize('create', Recommendation::class);
-
-        $this->recommendationService->create($request->validated(), auth()->user());
-
-        return redirect()->route('cms.recommendations.index')->with('success', 'Recommendation created successfully!');
+        return 'recommendations';
     }
 
-    public function edit(Recommendation $recommendation)
+    protected function storeRequestClass(): string
     {
-        $this->authorize('update', $recommendation);
-
-        return view('cms.recommendations.edit', ['recommendation' => $recommendation]);
+        return StoreRecommendationRequest::class;
     }
 
-    public function update(UpdateRecommendationRequest $request, Recommendation $recommendation)
+    protected function updateRequestClass(): string
     {
-        $this->authorize('update', $recommendation);
-
-        $this->recommendationService->update($recommendation, $request->validated(), auth()->user());
-
-        return redirect()->route('cms.recommendations.index')->with('success', 'Recommendation updated successfully!');
-    }
-
-    public function destroy(Recommendation $recommendation)
-    {
-        $this->authorize('delete', $recommendation);
-
-        $this->recommendationService->delete($recommendation);
-
-        return redirect()->route('cms.recommendations.index')->with('success', 'Recommendation deleted successfully!');
+        return UpdateRecommendationRequest::class;
     }
 }

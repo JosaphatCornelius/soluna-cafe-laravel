@@ -33,6 +33,14 @@ Route::get('/', function () {
     return view('welcome', compact('story', 'recommendations'));
 });
 
+Route::get('/about', function () {
+    $sections = Content::whereIn('slug', ['about-story', 'about-chef', 'about-awards'])
+        ->get()
+        ->keyBy('slug');
+
+    return view('aboutus', ['sections' => $sections]);
+})->name('about');
+
 Route::get('/product', function () {
     $categories = Product::orderBy('category')
         ->get()

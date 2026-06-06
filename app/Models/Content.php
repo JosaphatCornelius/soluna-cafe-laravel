@@ -13,6 +13,7 @@ class Content extends Model
         'slug',
         'title',
         'description',
+        'image_url',
         'created_by',
         'updated_by',
     ];

@@ -26,7 +26,7 @@
         </div>
 
         <div class="rounded-[22px] border border-[#dbcdbd] bg-white p-8">
-            <form action="{{ route('cms.products.store') }}" method="POST" class="space-y-6">
+            <form action="{{ route('cms.products.store') }}" method="POST" class="space-y-6" enctype="multipart/form-data">
                 @csrf
 
                 <div>
@@ -68,8 +68,22 @@
                 </div>
 
                 <div>
+                    <label for="image" class="block font-['Host_Grotesk'] font-bold text-[14px] text-[#241810] mb-2">
+                        Product Image
+                    </label>
+                    <input
+                        type="file"
+                        name="image"
+                        id="image"
+                        accept="image/*"
+                        class="w-full px-4 py-3 border border-[#d8c9b7] rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    />
+                    <p class="mt-1 text-[12px] text-[#8f7a68]">JPG, PNG, or WEBP up to 2 MB.</p>
+                </div>
+
+                <div>
                     <label for="image_url" class="block font-['Host_Grotesk'] font-bold text-[14px] text-[#241810] mb-2">
-                        Image URL
+                        Image URL <span class="font-normal text-[#8f7a68]">(optional, used if no file is uploaded)</span>
                     </label>
                     <input
                         type="text"
