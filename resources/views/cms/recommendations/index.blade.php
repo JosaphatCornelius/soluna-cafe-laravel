@@ -55,7 +55,7 @@
                     </div>
                 @empty
                     <div class="px-5 py-8 text-center text-[#5d4a3d]">
-                        No recommendations found. <a href="{{ route('cms.recommendations.create') }}" class="text-amber-600 hover:text-amber-700 font-bold">Create one</a>
+                        No recommendations found.@can('create', App\Models\Recommendation::class) <a href="{{ route('cms.recommendations.create') }}" class="text-amber-600 hover:text-amber-700 font-bold">Create one</a>@endcan
                     </div>
                 @endforelse
             </div>

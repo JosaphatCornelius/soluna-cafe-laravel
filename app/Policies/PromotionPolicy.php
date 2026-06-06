@@ -9,22 +9,22 @@ class PromotionPolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->isAdmin() || $user->isEditor() || $user->isUser();
+        return $user->isAdmin() || $user->isUser();
     }
 
     public function view(User $user, Promotion $promotion): bool
     {
-        return $user->isAdmin() || $user->isEditor() || $user->isUser();
+        return $user->isAdmin() || $user->isUser();
     }
 
     public function create(User $user): bool
     {
-        return $user->isAdmin() || $user->isEditor();
+        return $user->isAdmin();
     }
 
     public function update(User $user, Promotion $promotion): bool
     {
-        return $user->isAdmin() || $user->isEditor();
+        return $user->isAdmin();
     }
 
     public function delete(User $user, Promotion $promotion): bool

@@ -91,7 +91,7 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
 // CMS routes - Protected by auth and role middleware
-Route::middleware(['auth', 'editorOrAdmin'])->prefix('cms')->name('cms.')->group(function () {
+Route::middleware(['auth', 'cms'])->prefix('cms')->name('cms.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     
     // Content management — edit-only (pages are defined in code; new pages can't be created here)

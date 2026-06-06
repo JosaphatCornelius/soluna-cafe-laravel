@@ -10,9 +10,11 @@
                 <h1 class="mt-2 font-['Host_Grotesk'] text-[32px] font-bold text-[#241810]">{{ $product->name }}</h1>
             </div>
             <div class="flex gap-3">
-                <a href="{{ route('cms.products.edit', $product->id) }}" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded-lg text-[14px]">
-                    Edit
-                </a>
+                @can('update', $product)
+                    <a href="{{ route('cms.products.edit', $product->id) }}" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded-lg text-[14px]">
+                        Edit
+                    </a>
+                @endcan
                 <a href="{{ route('cms.products.index') }}" class="text-amber-600 hover:text-amber-700 font-bold">
                     ← Back to list
                 </a>

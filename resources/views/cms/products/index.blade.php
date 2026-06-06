@@ -68,7 +68,7 @@
                     </div>
                 @empty
                     <div class="px-5 py-8 text-center text-[#5d4a3d]">
-                        No products found. <a href="{{ route('cms.products.create') }}" class="text-amber-600 hover:text-amber-700 font-bold">Create one</a>
+                        No products found.@can('create', App\Models\Product::class) <a href="{{ route('cms.products.create') }}" class="text-amber-600 hover:text-amber-700 font-bold">Create one</a>@endcan
                     </div>
                 @endforelse
             </div>
