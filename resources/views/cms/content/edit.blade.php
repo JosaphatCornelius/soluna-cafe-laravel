@@ -20,7 +20,7 @@
                 <p class="font-['Host_Grotesk'] text-[12px] font-bold uppercase tracking-[0.35em] text-[#8f5a3a]">Edit Content</p>
                 <h1 class="mt-2 font-['Host_Grotesk'] text-[32px] font-bold text-[#241810]">{{ $content->title }}</h1>
             </div>
-            <a href="{{ route('cms.content.index') }}" class="text-amber-600 hover:text-amber-700 font-bold">
+            <a href="{{ route($backRoute) }}" class="text-amber-600 hover:text-amber-700 font-bold">
                 ← Back to list
             </a>
         </div>
@@ -55,11 +55,24 @@
                     >{{ old('description', $content->description) }}</textarea>
                 </div>
 
+                <div>
+                    <label for="image_url" class="block font-['Host_Grotesk'] font-bold text-[14px] text-[#241810] mb-2">
+                        Image URL <span class="font-normal text-[#8f7a68]">(optional)</span>
+                    </label>
+                    <input
+                        type="text"
+                        name="image_url"
+                        id="image_url"
+                        value="{{ old('image_url', $content->image_url) }}"
+                        class="w-full px-4 py-3 border border-[#d8c9b7] rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    />
+                </div>
+
                 <div class="pt-4 border-t border-[#e5dbcf]">
                     <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-lg">
                         Save Changes
                     </button>
-                    <a href="{{ route('cms.content.index') }}" class="ml-4 inline-block text-[#5d4a3d] hover:text-[#241810]">
+                    <a href="{{ route($backRoute) }}" class="ml-4 inline-block text-[#5d4a3d] hover:text-[#241810]">
                         Cancel
                     </a>
                 </div>

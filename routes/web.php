@@ -9,6 +9,7 @@ use App\Http\Controllers\ContentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RecommendationController;
+use App\Http\Controllers\UserController;
 use App\Models\Content;
 use App\Models\Product;
 use App\Models\Promotion;
@@ -32,6 +33,14 @@ Route::get('/', function () {
 
     return view('welcome', compact('story', 'recommendations'));
 });
+
+Route::get('/about', function () {
+    $sections = Content::whereIn('slug', ['about-story', 'about-chef', 'about-awards'])
+        ->get()
+        ->keyBy('slug');
+
+    return view('aboutus', ['sections' => $sections]);
+})->name('about');
 
 Route::get('/product', function () {
     $categories = Product::orderBy('category')
@@ -83,11 +92,12 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
 // CMS routes - Protected by auth and role middleware
-Route::middleware(['auth', 'editorOrAdmin'])->prefix('cms')->name('cms.')->group(function () {
+Route::middleware(['auth', 'cms'])->prefix('cms')->name('cms.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     
     // Content management — edit-only (pages are defined in code; new pages can't be created here)
     Route::get('/content', [ContentController::class, 'index'])->name('content.index');
+    Route::get('/about', [ContentController::class, 'about'])->name('about.index');
     Route::get('/content/{content}/edit', [ContentController::class, 'edit'])->name('content.edit');
     Route::put('/content/{content}', [ContentController::class, 'update'])->name('content.update');
     Route::get('/content/{content}', [ContentController::class, 'show'])->name('content.show');
@@ -122,4 +132,14 @@ Route::middleware(['auth', 'editorOrAdmin'])->prefix('cms')->name('cms.')->group
     Route::get('/contacts', [ContactMessageController::class, 'index'])->name('contacts.index');
     Route::get('/contacts/{contactMessage}', [ContactMessageController::class, 'show'])->name('contacts.show');
     Route::delete('/contacts/{contactMessage}', [ContactMessageController::class, 'destroy'])->name('contacts.destroy');
+
+    // User management (admin only)
+    Route::middleware('admin')->group(function () {
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+        Route::post('/users', [UserController::class, 'store'])->name('users.store');
+        Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    });
 });

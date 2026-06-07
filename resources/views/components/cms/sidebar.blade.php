@@ -1,4 +1,7 @@
 @php
+    $routeContent = request()->route('content');
+    $editingAbout = $routeContent instanceof \App\Models\Content && $routeContent->isAboutSection();
+
     $navItems = [
         [
             'label' => 'Overview',
@@ -8,7 +11,12 @@
         [
             'label' => 'Homepage',
             'route' => 'cms.content.index',
-            'active' => request()->routeIs('cms.content.*'),
+            'active' => request()->routeIs('cms.content.*') && ! $editingAbout,
+        ],
+        [
+            'label' => 'About Us',
+            'route' => 'cms.about.index',
+            'active' => request()->routeIs('cms.about.*') || $editingAbout,
         ],
         [
             'label' => 'Products',
@@ -31,6 +39,14 @@
             'active' => request()->routeIs('cms.contacts.*'),
         ],
     ];
+
+    if (auth()->user()->isAdmin()) {
+        $navItems[] = [
+            'label' => 'Users',
+            'route' => 'cms.users.index',
+            'active' => request()->routeIs('cms.users.*'),
+        ];
+    }
 @endphp
 
 <aside class="border-b border-[#d8c9b7] bg-[#3f2719] px-6 py-6 text-white lg:fixed lg:inset-y-0 lg:left-0 lg:w-[290px] lg:border-b-0 lg:border-r">

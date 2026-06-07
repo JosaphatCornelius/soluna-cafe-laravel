@@ -16,22 +16,37 @@ class ContentController extends Controller
     }
 
     /**
-     * Display a listing of content.
+     * Display a listing of content, excluding the About Us sections which have
+     * their own module.
      */
     public function index()
     {
         $this->authorize('viewAny', Content::class);
 
-        $contents = $this->contentService->getAll();
+        $contents = $this->contentService->getExcludingSlugs(Content::ABOUT_SLUGS);
 
         return view('cms.content.index', ['contents' => $contents]);
+    }
+
+    /**
+     * Display the About Us sections (Story, Chef, Awards) for editing.
+     */
+    public function about()
+    {
+        $this->authorize('viewAny', Content::class);
+
+        $sections = $this->contentService->getBySlugs(Content::ABOUT_SLUGS);
+
+        return view('cms.about.index', ['sections' => $sections]);
     }
 
     public function edit(Content $content)
     {
         $this->authorize('update', $content);
 
-        return view('cms.content.edit', ['content' => $content]);
+        $backRoute = $content->isAboutSection() ? 'cms.about.index' : 'cms.content.index';
+
+        return view('cms.content.edit', ['content' => $content, 'backRoute' => $backRoute]);
     }
 
     /**
@@ -43,7 +58,9 @@ class ContentController extends Controller
 
         $this->contentService->update($content, $request->validated(), auth()->user());
 
-        return redirect()->route('cms.content.index')->with('success', 'Content updated successfully!');
+        $listRoute = $content->isAboutSection() ? 'cms.about.index' : 'cms.content.index';
+
+        return redirect()->route($listRoute)->with('success', 'Content updated successfully!');
     }
 
     /**

@@ -24,7 +24,6 @@
                     </div>
 
                     <div class="flex flex-wrap items-center gap-3">
-                        <div class="rounded-full border border-[#d8c9b7] bg-white px-4 py-2 font-['Host_Grotesk'] text-[14px] text-[#5d4a3d]">Backend not ready</div>
                         <a href="{{ url('/') }}" class="rounded-full bg-[#3f2719] px-5 py-2 font-['Host_Grotesk'] text-[14px] font-bold text-white transition-colors duration-200 hover:bg-[#2a1a13]">Preview site</a>
                     </div>
                 </div>

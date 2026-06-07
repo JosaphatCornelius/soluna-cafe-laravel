@@ -13,7 +13,9 @@ class UpdatePromotionRequest extends FormRequest
 
     public function rules(): array
     {
-        $promotionId = $this->route('promotion')?->id;
+        // The abstract CRUD controller does not bind the model, so the route
+        // parameter is the raw promotion id.
+        $promotionId = $this->route('promotion');
 
         return [
             'title' => ['required', 'string', 'max:255'],

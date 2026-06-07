@@ -12,7 +12,7 @@ class ContentPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isAdmin() || $user->isEditor() || $user->isUser();
+        return $user->isAdmin() || $user->isUser();
     }
 
     /**
@@ -20,7 +20,7 @@ class ContentPolicy
      */
     public function view(User $user, Content $content): bool
     {
-        return $user->isAdmin() || $user->isEditor() || $user->isUser();
+        return $user->isAdmin() || $user->isUser();
     }
 
     /**
@@ -28,7 +28,7 @@ class ContentPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdmin() || $user->isEditor();
+        return $user->isAdmin();
     }
 
     /**
@@ -36,7 +36,7 @@ class ContentPolicy
      */
     public function update(User $user, Content $content): bool
     {
-        return $user->isAdmin() || $user->isEditor();
+        return $user->isAdmin();
     }
 
     /**

@@ -2,74 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Cms\CrudController;
 use App\Http\Requests\StorePromotionRequest;
 use App\Http\Requests\UpdatePromotionRequest;
 use App\Models\Promotion;
+use App\Services\Contracts\CrudServiceInterface;
 use App\Services\PromotionService;
 
-class PromotionController extends Controller
+class PromotionController extends CrudController
 {
-    protected PromotionService $promotionService;
-
-    public function __construct(PromotionService $promotionService)
+    public function __construct(protected PromotionService $promotionService)
     {
-        $this->promotionService = $promotionService;
     }
 
-    public function index()
+    protected function service(): CrudServiceInterface
     {
-        $this->authorize('viewAny', Promotion::class);
-
-        $promotions = $this->promotionService->getAll();
-
-        return view('cms.promotions.index', ['promotions' => $promotions]);
+        return $this->promotionService;
     }
 
-    public function create()
+    protected function modelClass(): string
     {
-        $this->authorize('create', Promotion::class);
-
-        return view('cms.promotions.create');
+        return Promotion::class;
     }
 
-    public function store(StorePromotionRequest $request)
+    protected function resourceName(): string
     {
-        $this->authorize('create', Promotion::class);
-
-        $this->promotionService->create($request->validated(), auth()->user());
-
-        return redirect()->route('cms.promotions.index')->with('success', 'Promotion created successfully!');
+        return 'promotions';
     }
 
-    public function show(Promotion $promotion)
+    protected function storeRequestClass(): string
     {
-        $this->authorize('view', $promotion);
-
-        return view('cms.promotions.show', ['promotion' => $promotion]);
+        return StorePromotionRequest::class;
     }
 
-    public function edit(Promotion $promotion)
+    protected function updateRequestClass(): string
     {
-        $this->authorize('update', $promotion);
-
-        return view('cms.promotions.edit', ['promotion' => $promotion]);
-    }
-
-    public function update(UpdatePromotionRequest $request, Promotion $promotion)
-    {
-        $this->authorize('update', $promotion);
-
-        $this->promotionService->update($promotion, $request->validated(), auth()->user());
-
-        return redirect()->route('cms.promotions.index')->with('success', 'Promotion updated successfully!');
-    }
-
-    public function destroy(Promotion $promotion)
-    {
-        $this->authorize('delete', $promotion);
-
-        $this->promotionService->delete($promotion);
-
-        return redirect()->route('cms.promotions.index')->with('success', 'Promotion deleted successfully!');
+        return UpdatePromotionRequest::class;
     }
 }

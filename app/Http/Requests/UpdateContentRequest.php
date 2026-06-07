@@ -21,12 +21,11 @@ class UpdateContentRequest extends FormRequest
      */
     public function rules(): array
     {
-        $contentId = $this->route('content')?->id;
-
+        // The slug is an immutable page key, so it is not edited here.
         return [
             'title' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', 'alpha_dash', 'unique:contents,slug,' . $contentId],
             'description' => ['required', 'string'],
+            'image_url' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

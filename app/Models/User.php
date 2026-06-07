@@ -57,14 +57,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if user is editor
-     */
-    public function isEditor(): bool
-    {
-        return $this->role === 'editor';
-    }
-
-    /**
      * Check if user is a view-only user (no create/update/delete in the CMS)
      */
     public function isUser(): bool

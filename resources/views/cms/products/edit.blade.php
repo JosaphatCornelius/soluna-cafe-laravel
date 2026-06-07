@@ -26,7 +26,7 @@
         </div>
 
         <div class="rounded-[22px] border border-[#dbcdbd] bg-white p-8">
-            <form action="{{ route('cms.products.update', $product->id) }}" method="POST" class="space-y-6">
+            <form action="{{ route('cms.products.update', $product->id) }}" method="POST" class="space-y-6" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -68,9 +68,35 @@
                     />
                 </div>
 
+                @if ($product->image_url)
+                    @php
+                        $currentImage = filter_var($product->image_url, FILTER_VALIDATE_URL)
+                            ? $product->image_url
+                            : asset($product->image_url);
+                    @endphp
+                    <div>
+                        <p class="block font-['Host_Grotesk'] font-bold text-[14px] text-[#241810] mb-2">Current Image</p>
+                        <img src="{{ $currentImage }}" alt="{{ $product->name }}" class="h-32 w-32 rounded-lg object-cover border border-[#d8c9b7]">
+                    </div>
+                @endif
+
+                <div>
+                    <label for="image" class="block font-['Host_Grotesk'] font-bold text-[14px] text-[#241810] mb-2">
+                        Replace Image
+                    </label>
+                    <input
+                        type="file"
+                        name="image"
+                        id="image"
+                        accept="image/*"
+                        class="w-full px-4 py-3 border border-[#d8c9b7] rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    />
+                    <p class="mt-1 text-[12px] text-[#8f7a68]">JPG, PNG, or WEBP up to 2 MB. Leave empty to keep the current image.</p>
+                </div>
+
                 <div>
                     <label for="image_url" class="block font-['Host_Grotesk'] font-bold text-[14px] text-[#241810] mb-2">
-                        Image URL
+                        Image URL <span class="font-normal text-[#8f7a68]">(optional, used if no file is uploaded)</span>
                     </label>
                     <input
                         type="text"

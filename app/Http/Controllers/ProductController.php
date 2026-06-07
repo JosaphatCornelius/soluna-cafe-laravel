@@ -2,96 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Cms\CrudController;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use App\Services\Contracts\CrudServiceInterface;
 use App\Services\ProductService;
-use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProductController extends CrudController
 {
-    protected ProductService $productService;
-
-    public function __construct(ProductService $productService)
+    public function __construct(protected ProductService $productService)
     {
-        $this->productService = $productService;
     }
 
-    /**
-     * Display a listing of products.
-     */
-    public function index()
+    protected function service(): CrudServiceInterface
     {
-        $this->authorize('viewAny', Product::class);
-
-        $products = $this->productService->getAll();
-
-        return view('cms.products.index', ['products' => $products]);
+        return $this->productService;
     }
 
-    /**
-     * Show the form for creating a new product.
-     */
-    public function create()
+    protected function modelClass(): string
     {
-        $this->authorize('create', Product::class);
-
-        return view('cms.products.create');
+        return Product::class;
     }
 
-    /**
-     * Store a newly created product in storage.
-     */
-    public function store(StoreProductRequest $request)
+    protected function resourceName(): string
     {
-        $this->authorize('create', Product::class);
-
-        $this->productService->create($request->validated(), auth()->user());
-
-        return redirect()->route('cms.products.index')->with('success', 'Product created successfully!');
+        return 'products';
     }
 
-    /**
-     * Display the specified product.
-     */
-    public function show(Product $product)
+    protected function storeRequestClass(): string
     {
-        $this->authorize('view', $product);
-
-        return view('cms.products.show', ['product' => $product]);
+        return StoreProductRequest::class;
     }
 
-    /**
-     * Show the form for editing the specified product.
-     */
-    public function edit(Product $product)
+    protected function updateRequestClass(): string
     {
-        $this->authorize('update', $product);
-
-        return view('cms.products.edit', ['product' => $product]);
-    }
-
-    /**
-     * Update the specified product in storage.
-     */
-    public function update(UpdateProductRequest $request, Product $product)
-    {
-        $this->authorize('update', $product);
-
-        $this->productService->update($product, $request->validated(), auth()->user());
-
-        return redirect()->route('cms.products.index')->with('success', 'Product updated successfully!');
-    }
-
-    /**
-     * Remove the specified product from storage.
-     */
-    public function destroy(Product $product)
-    {
-        $this->authorize('delete', $product);
-
-        $this->productService->delete($product);
-
-        return redirect()->route('cms.products.index')->with('success', 'Product deleted successfully!');
+        return UpdateProductRequest::class;
     }
 }

@@ -4,64 +4,58 @@ namespace App\Services;
 
 use App\Models\Content;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class ContentService
+class ContentService extends BaseService
 {
-    /**
-     * Get all content
-     */
-    public function getAll()
+    protected function modelClass(): string
     {
-        return Content::all();
-    }
-
-    /**
-     * Get content by ID
-     */
-    public function getById($id)
-    {
-        return Content::findOrFail($id);
+        return Content::class;
     }
 
     /**
      * Get content by slug
      */
-    public function getBySlug($slug)
+    public function getBySlug(string $slug): Content
     {
         return Content::where('slug', $slug)->firstOrFail();
     }
 
     /**
-     * Create new content
+     * Get content rows whose slug is in the given list, ordered to match it.
      */
-    public function create(array $data, User $user): Content
+    public function getBySlugs(array $slugs): Collection
     {
-        $data['slug'] = $data['slug'] ?? Str::slug($data['title']);
-        $data['created_by'] = $user->id;
-        $data['updated_by'] = $user->id;
-
-        return Content::create($data);
+        return Content::whereIn('slug', $slugs)
+            ->orderByRaw('FIELD(slug, ?' . str_repeat(', ?', count($slugs) - 1) . ')', $slugs)
+            ->get();
     }
 
     /**
-     * Update content
+     * Get content rows excluding the given slugs.
      */
-    public function update(Content $content, array $data, User $user): Content
+    public function getExcludingSlugs(array $slugs): Collection
     {
-        $data['slug'] = $data['slug'] ?? Str::slug($data['title']);
-        $data['updated_by'] = $user->id;
-
-        $content->update($data);
-
-        return $content;
+        return Content::whereNotIn('slug', $slugs)
+            ->orderBy($this->orderColumn, $this->orderDirection)
+            ->get();
     }
 
-    /**
-     * Delete content
-     */
-    public function delete(Content $content): bool
+    public function create(array $data, ?User $user = null): Model
     {
-        return $content->delete();
+        $data['slug'] = $data['slug'] ?? Str::slug($data['title']);
+
+        return parent::create($data, $user);
+    }
+
+    public function update(Model $model, array $data, ?User $user = null): Model
+    {
+        // The slug is a fixed page key referenced from code/routes, so it is
+        // never regenerated on update — only the editable fields change.
+        unset($data['slug']);
+
+        return parent::update($model, $data, $user);
     }
 }

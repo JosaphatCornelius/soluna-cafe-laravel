@@ -352,7 +352,13 @@
         <h1>{{ $story->title ?? 'Our Story' }}</h1>
 
         <div class="card-story">
-            <img src="{{ asset('about.jpg') }}" alt="Our Story">
+            @php
+                $storyImage = $story->image_url ?? null;
+                $storyImage = $storyImage
+                    ? (filter_var($storyImage, FILTER_VALIDATE_URL) ? $storyImage : asset($storyImage))
+                    : asset('about.jpg');
+            @endphp
+            <img src="{{ $storyImage }}" alt="Our Story">
             <p>{{ $story->description ?? 'The Heritage of Soluna Cafe Our story began on October 24th, 2022, born from a deep-rooted passion for authentic flavors and the art of hospitality. What started as a vision to create the perfect community getaway has evolved into Soluna Cafe, a place where every corner tells a story and every guest is treated like family. Since our first day, we have remained committed to the idea that a cafe should be more than just a place to eat—it should be an experience.' }}</p>
         </div>
     </div>

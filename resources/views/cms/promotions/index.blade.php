@@ -59,7 +59,7 @@
                     </div>
                 @empty
                     <div class="px-5 py-8 text-center text-[#5d4a3d]">
-                        No promotions found. <a href="{{ route('cms.promotions.create') }}" class="text-amber-600 hover:text-amber-700 font-bold">Create one</a>
+                        No promotions found.@can('create', App\Models\Promotion::class) <a href="{{ route('cms.promotions.create') }}" class="text-amber-600 hover:text-amber-700 font-bold">Create one</a>@endcan
                     </div>
                 @endforelse
             </div>

@@ -9,13 +9,22 @@ class Content extends Model
 {
     use HasFactory;
 
+    /** Slugs that make up the public About Us page. */
+    public const ABOUT_SLUGS = ['about-story', 'about-chef', 'about-awards'];
+
     protected $fillable = [
         'slug',
         'title',
         'description',
+        'image_url',
         'created_by',
         'updated_by',
     ];
+
+    public function isAboutSection(): bool
+    {
+        return in_array($this->slug, self::ABOUT_SLUGS, true);
+    }
 
     /**
      * Get the user who created this content
