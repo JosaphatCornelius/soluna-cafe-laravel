@@ -50,6 +50,8 @@
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan config:clear",
+            "@php artisan cache:clear",
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
