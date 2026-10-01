@@ -20,3 +20,14 @@ jobs:
           context: .
           push: false
           tags: test-build:latest
+
+      - name: Inject Production .env
+        run: |
+          cat << 'EOF' > .env
+          ${{ secrets.LARAVEL_PROD_ENV }}
+          EOF
+
+      - name: Sanity check .env
+        run: |
+          echo "lines: $(wc -l < .env)"
+          cut -d= -f1 .env | grep -v '^#' | grep -v '^$'
