@@ -61,6 +61,12 @@ jobs:
           ssh-keyscan -H ${{ secrets.VPS_IP }} > ~/.ssh/known_hosts
           docker context create personal-vps --docker "host=ssh://${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }}"
 
+      - name: Inject Production .env
+        run: |
+          cat << 'EOF' > .env
+          ${{ secrets.LARAVEL_PROD_ENV }}
+          EOF
+
       - name: Deploy Compose
         run: |
           echo "Start Deployment Production";
