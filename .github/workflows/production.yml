@@ -64,7 +64,7 @@ jobs:
       - name: Inject Production .env
         run: |
           cat << 'EOF' > .env
-          ${{ secrets.LARAVEL_PROD_ENV }}
+          ${{ secrets.SOLUNA_CAFE_ENV }}
           EOF
 
       - name: Deploy Compose
