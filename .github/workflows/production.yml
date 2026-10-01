@@ -67,6 +67,11 @@ jobs:
           ${{ secrets.LARAVEL_PROD_ENV }}
           EOF
 
+      - name: Sanity check .env
+        run: |
+          echo "lines: $(wc -l < .env)"
+          cut -d= -f1 .env | grep -v '^#' | grep -v '^$' || echo "WARNING: .env has no variables"
+
       - name: Deploy Compose
         run: |
           echo "Start Deployment Production";
