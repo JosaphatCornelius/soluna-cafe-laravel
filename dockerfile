@@ -14,6 +14,9 @@ WORKDIR /var/www/html
 # Copy the entire Laravel application code into the container
 COPY . .
 
+# Create a dummy SQLite file to satisfy Laravel's default requirements during build scripts
+RUN mkdir -p database && touch database/database.sqlite
+
 # Install Composer and dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress --prefer-dist
 
