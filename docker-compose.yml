@@ -13,7 +13,7 @@ services:
     #   dockerfile: dockerfile
     restart: always
     volumes:
-      - laravel-storage-production:/var/www/storage
+      - laravel-storage-production:/var/www/html/storage
     networks:
       - apisix_frontend
       - database_net

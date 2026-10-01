@@ -24,7 +24,7 @@ ENV DB_DATABASE=:memory:
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress --prefer-dist
 
 # Stage 2: Production environment
-FROM serversideup/php:8.2-fpm-alpine AS production
+FROM serversideup/php:8.2-fpm-nginx-alpine AS production
 
 USER root
 
