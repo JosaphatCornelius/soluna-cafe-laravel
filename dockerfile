@@ -1,5 +1,5 @@
 # Stage 1: Build environment and Composer dependencies
-FROM serversideup/php:8.5-cli AS builder
+FROM serversideup/php:8.2-cli AS builder
 
 # Switch to root to install PHP extensions
 USER root
@@ -18,7 +18,7 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress --prefer-dist
 
 # Stage 2: Production environment
-FROM serversideup/php:8.5-web AS production
+FROM serversideup/php:8.2-web AS production
 
 USER root
 
