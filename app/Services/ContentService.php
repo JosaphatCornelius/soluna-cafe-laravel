@@ -28,8 +28,23 @@ class ContentService extends BaseService
      */
     public function getBySlugs(array $slugs): Collection
     {
+        if (empty($slugs)) {
+            return collect();
+        }
+
+        $cases = [];
+        $bindings = [];
+
+        foreach ($slugs as $index => $slug) {
+            $cases[] = "WHEN slug = ? THEN ?";
+            $bindings[] = $slug;
+            $bindings[] = $index;
+        }
+
+        $caseSql = "CASE " . implode(' ', $cases) . " END";
+
         return Content::whereIn('slug', $slugs)
-            ->orderByRaw('FIELD(slug, ?' . str_repeat(', ?', count($slugs) - 1) . ')', $slugs)
+            ->orderByRaw($caseSql, $bindings)
             ->get();
     }
 

@@ -1,0 +1,29 @@
+services:
+  website:
+    image: ${REGISTRY}/${NAMESPACE}/${CONTAINER_NAME}:${DOCKER_TAG:-latest}
+    container_name: ${CONTAINER_NAME}
+    pull_policy: always
+    env_file:
+      - .env
+    environment:
+      APP_ENV: production
+    # for manual build
+    # build:
+    #   context: .
+    #   dockerfile: dockerfile
+    restart: always
+    volumes:
+      - laravel-storage-production:/var/www/storage
+    networks:
+      - apisix_frontend
+      - database_net
+
+networks:
+  apisix_frontend:
+    external: true
+
+  database_net:
+    external: true
+
+volumes:
+  laravel-storage-production:
