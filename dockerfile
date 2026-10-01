@@ -18,7 +18,7 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress --prefer-dist
 
 # Stage 2: Production environment
-FROM serversideup/php:8.2-web AS production
+FROM serversideup/php:8.2-fpm-alpine AS production
 
 USER root
 
