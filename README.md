@@ -5,7 +5,7 @@ Soluna Cafe Laravel
 Final project of Object Oriented Programming in my second semester in university.
 
 ## Build status
-Done, awaiting CI/CD deployment.
+Deployed in self-hosted VPS.
 
 ## Code style
 Laravel best practices.
