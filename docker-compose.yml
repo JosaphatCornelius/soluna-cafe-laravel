@@ -17,10 +17,6 @@ services:
     networks:
       - apisix_frontend
       - database_net
-    configs:
-      - source: laravel_env
-        target: /var/www/html/.env
-        mode: 0444
 
 networks:
   apisix_frontend:
