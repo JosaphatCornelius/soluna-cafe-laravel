@@ -8,6 +8,9 @@ USER root
 # This replaces the manual apt-get and docker-php-ext-install commands
 RUN install-php-extensions pdo_mysql pdo_pgsql pgsql intl zip bcmath soap redis
 
+# Intall Node.js and npm for frontend asset compilation
+RUN apt-get update && apt-get install -y nodejs npm
+
 # Set the working directory
 WORKDIR /var/www/html
 
@@ -22,6 +25,9 @@ ENV DB_DATABASE=:memory:
 
 # Install Composer and dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress --prefer-dist
+
+# Install Node.js dependencies and build frontend assets
+RUN npm ci && npm run build
 
 # Stage 2: Production environment
 FROM serversideup/php:8.2.35-fpm-nginx-alpine AS production
