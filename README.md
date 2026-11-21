@@ -1,45 +1,53 @@
-## Project title
-Soluna Cafe Laravel
+# Soluna Cafe Laravel
 
-## Motivation
-Final project of Object Oriented Programming in my second semester in university.
+[![Build Status](https://github.com/JosaphatCornelius/soluna-cafe-laravel/actions/workflows/production.yml/badge.svg)](https://github.com/JosaphatCornelius/soluna-cafe-laravel/actions/workflows/production.yml)
 
-## Build status
-Deployed in self-hosted VPS.
+A full-stack cafe web application built with Laravel and MySQL. It was my final project for Object-Oriented Programming in my second semester at university.
 
-## Code style
-Laravel best practices.
+![Soluna Cafe screenshot](https://github.com/user-attachments/assets/739e762e-6aa9-486b-b818-e94611fb00a4)
 
-## Screenshots
-<img width="760" height="1999" alt="image2" src="https://github.com/user-attachments/assets/739e762e-6aa9-486b-b818-e94611fb00a4" />
+## Tech Stack
 
-## Tech/framework used
-<b>Built with</b>
-- [Laravel](https://laravel.com/)
-- [MySQL](https://www.mysql.com/)
+* **Core:** Laravel (PHP)
+* **Database:** MySQL, with Laravel migrations
+* **Infrastructure:** Self-hosted VPS
+* **Code style:** Laravel best practices
 
-## Features
-Full-stack Laravel project with migrations.
+## Quick Start
 
-## Installation
-Install Laravel with composer up and run migration.
+Instructions to get the development environment running locally.
 
-## API Reference
-None atm.
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/soluna-cafe-laravel.git
+cd soluna-cafe-laravel
 
-## Tests
-Run with composer
+# Install dependencies
+composer install
 
-## How to use?
-Clone this repository and run it locally with composer
+# Set up environment
+cp .env.example .env
+php artisan key:generate
 
-## Contribute
-Point out our errors!
+# Run migrations and start the server
+php artisan migrate
+php artisan serve
+```
 
-## Credits
-My classmates listed in contributors list.
+*Note: Ensure you have PHP, Composer, and MySQL installed. Set your database credentials in the `.env` file before running migrations.*
 
-## License
-None.
+## Usage
 
-MIT © [Yourname]()
+Clone the repository and run it locally using the steps above. Then open the local URL printed by `php artisan serve` to browse the cafe site.
+
+To run the tests:
+
+```bash
+composer test
+```
+
+## Contributing & License
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Currently unlicensed. All rights reserved.
